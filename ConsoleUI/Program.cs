@@ -17,15 +17,14 @@ namespace ConsoleUI
             BrandManager brandManager = new BrandManager(new EfBrandDal());
 
 
-
             //addingCar(carManager);
             //getAllCar(carManager);
-            //gettAllCarDetails(carManager);
+            //getAllCarDetails(carManager);
             //getCarByDailyPrice(carManager);
             //addingColor(colorManager);
             //getAllColor(colorManager);
             //addingBrand(brandManager);
-            //getAllBrand(brandManager);
+            getAllBrand(brandManager);
             //getById(carManager, colorManager, brandManager);
         }
 
@@ -42,40 +41,54 @@ namespace ConsoleUI
             colorManager.Add(new Color { Name = "Turkuaz" });
         }
 
-        private static void gettAllCarDetails(CarManager carManager)
+        private static void getAllCarDetails(CarManager carManager)
         {
-            Console.WriteLine("\n\n---- Detaylı Kiralık Araba Bilgileri----\n");
+            var result = carManager.GetCarDetails();
 
-            foreach (var carDetails in carManager.GetCarDetails())
+            if (result.Success)
             {
-                Console.WriteLine("\n\n-----------------------------\n");
+                Console.WriteLine("\n\n---- Detaylı Kiralık Araba Bilgileri----\n");
+                foreach (var carDetails in result.Data)
+                {
+                    Console.WriteLine("\n\n-----------------------------\n");
 
-                Console.WriteLine("araba ıd: " + carDetails.Id + "\nAraba modeli: " + carDetails.BrandName +
-                                   "\nAraba rengi: " + carDetails.ColorName + "\naraba günlük kira: " + carDetails.DailyPrice +
-                                   "\naraba açıklama: " + carDetails.Description);
+                    Console.WriteLine("araba ıd: " + carDetails.Id + "\nAraba modeli: " + carDetails.BrandName +
+                                       "\nAraba rengi: " + carDetails.ColorName + "\naraba günlük kira: " + carDetails.DailyPrice +
+                                       "\naraba açıklama: " + carDetails.Description);
+                }
+                Console.WriteLine("\n\n\n" + result.Message);
             }
+            else { Console.WriteLine(result.Message); }           
         }
 
         private static void getAllBrand(BrandManager brandManager)
         {
-            foreach (var brand in brandManager.GetAll())
+            var result = brandManager.GetAll();
+
+            if (result.Success)
             {
-                Console.WriteLine("Brand ID: " + brand.Id + @" \ Brand Name: " + brand.Name);
+                foreach (var brand in brandManager.GetAll().Data)
+                {
+                    Console.WriteLine("Brand ID: " + brand.Id + @" \ Brand Name: " + brand.Name);
+                    Console.WriteLine(result.Message);
+                }
             }
+            else { Console.WriteLine(result.Message); }
+            
         }
 
         private static void getById(CarManager carManager, ColorManager colorManager, BrandManager brandManager)
         {
-            Console.WriteLine("ID 5 Olan Araba: " + carManager.GetById(5).Description);
-            Console.WriteLine("ID 2 olan Brand: " + brandManager.GetById(2).Name);
-            Console.WriteLine("ID 4 Olan Renk: " + colorManager.GetById(4).Name);
+            Console.WriteLine("ID 5 Olan Araba: " + carManager.GetById(5).Data.Description);
+            Console.WriteLine("ID 2 olan Brand: " + brandManager.GetById(2).Data.Name);
+            Console.WriteLine("ID 4 Olan Renk: " + colorManager.GetById(4).Data.Name);
         }
 
         private static void getAllCar(CarManager carManager)
         {
             Console.WriteLine("\n\n----kiralık araba bilgileri----\n");
 
-            foreach (var car in carManager.GetAll())
+            foreach (var car in carManager.GetAll().Data)
             {
                 
                 Console.WriteLine("\n\n-----------------------------\n");
@@ -96,7 +109,7 @@ namespace ConsoleUI
 
         private static void getAllColor(ColorManager colorManager)
         {
-            foreach (var color in colorManager.GetAll())
+            foreach (var color in colorManager.GetAll().Data)
             {
                 Console.WriteLine("Renk ID: " + color.Id + @" \ Renk:" + color.Name);
             }
@@ -104,7 +117,7 @@ namespace ConsoleUI
 
         private static void getCarByDailyPrice(CarManager carManager)
         {
-            foreach (var car in carManager.GetByDailyPrice(30, 100))
+            foreach (var car in carManager.GetByDailyPrice(30, 100).Data)
             {
                 Console.WriteLine("\n\n----Kiralık Araba Bilgileri----\n");
 
