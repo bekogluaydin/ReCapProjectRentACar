@@ -15,17 +15,94 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new EfCarDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-
+            UserManager userManager = new UserManager(new EfUserDal());
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
             //addingCar(carManager);
             //getAllCar(carManager);
             //getAllCarDetails(carManager);
             //getCarByDailyPrice(carManager);
+
             //addingColor(colorManager);
             //getAllColor(colorManager);
+
             //addingBrand(brandManager);
-            getAllBrand(brandManager);
+            //getAllBrand(brandManager);
+
             //getById(carManager, colorManager, brandManager);
+
+            //addingUser(userManager);
+            //getAllUser(userManager);
+
+            //addingCustomer(customerManager);
+
+            //addingRental(rentalManager);
+
+            var result = rentalManager.GetAll();
+
+            if (result.Success)
+            {
+                foreach (var rental in result.Data)
+                {
+                    Console.WriteLine("\n\n-----------------------------\n");
+
+                    Console.WriteLine("rental ıd: " + rental.Id + "\nCar Id: " + rental.CarId +
+                                       "\nCustomer Id: " + rental.CustomerId + "\nRent Date: " + rental.RentDate +
+                                       "\nReturn Date: " + rental.ReturnDate);
+                }
+                Console.WriteLine("\n\n\n" + result.Message);
+            }
+            else { Console.WriteLine(result.Message); }
+        }
+
+        private static void addingRental(RentalManager rentalManager)
+        {
+            var result = rentalManager.Add(new Rental { CarId = 1, CustomerId = 1, RentDate = new DateTime(2021, 02, 18) });
+            if (result.Success)
+            {
+                Console.WriteLine(result.Message);
+            }
+            else { Console.WriteLine(result.Message); }
+        }
+
+        private static void addingCustomer(CustomerManager customerManager)
+        {
+            var result1 = customerManager.Add(new Customer { UserId = 1, CompanyName = "Redux Rent Car" });
+
+            if (result1.Success)
+            {
+                Console.WriteLine(result1.Message);
+            }
+            else { Console.WriteLine(result1.Message); }
+        }
+
+        private static void addingUser(UserManager userManager)
+        {
+           var result1 = userManager.Add(new User { FirstName = "Aydın", LastName = "Bekoğlu" });
+            if (result1.Success)
+            {
+                Console.WriteLine(result1.Message);
+            }
+            else { Console.WriteLine(result1.Message); }
+        }
+
+        private static void getAllUser(UserManager userManager)
+        {
+            var result = userManager.GetAll();
+            if (result.Success)
+            {
+                foreach (var user in result.Data)
+                {
+                    Console.WriteLine("\n\n-----------------------------\n");
+
+                    Console.WriteLine("user ıd: " + user.Id + "\nUser First Name: " + user.FirstName +
+                                       "\nUser Last Name: " + user.LastName + "\nUser Email: " + user.Email +
+                                       "\nUser Password: " + user.Password);
+                }
+                Console.WriteLine("\n\n\n" + result.Message);
+            }
+            else { Console.WriteLine(result.Message); }
         }
 
         private static void addingBrand(BrandManager brandManager)

@@ -20,5 +20,19 @@ namespace Business.Constans
         public static string brandAdded = "Brand Eklendi";
         public static string brandNameInvalid = "Brand ismi geçersiz";
         public static string brandListed = "Brand'ler listelendi";
+
+        public static string userAdded = "User Added";
+        public static string userFirstNameInvalid = "User First Name invalid";
+        public static string userLastNameInvalid = "User Last Name invalid";
+        public static string userListed = "User Listed";
+
+        public static string customerAdded = "Customer Added";
+        public static string customerCompanyNameInvalid = "Customer Company Name invalid";
+        public static string customerListed = "Customer Listed";
+
+        public static string rentalAdded = "Rental Added";
+        public static string rentalRentDateInvalid = "Rental Rent Date invalid";
+        public static string rentalReturnDateInvalid = "Rental Return Date invalid";
+        public static string rentalListed = "Rental Listed";
     }
 }
