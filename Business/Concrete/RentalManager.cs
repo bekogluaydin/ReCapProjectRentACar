@@ -19,12 +19,47 @@ namespace Business.Concrete
         }
         public IResult Add(Rental rental)
         {
-            if (rental.CarId != 0 && rental.CustomerId !=0 && rental.RentDate != default)
+
+            var rentalsReturnDate = _rentalDal.GetAll(r => r.CarId == rental.CarId);
+            var hasCustomersRentedCar = _rentalDal.GetAll(c => c.CustomerId == rental.CustomerId);
+            bool carVarMi = false;
+            bool customerVarMi = false;
+
+            if (rentalsReturnDate.Count > 0 || hasCustomersRentedCar.Count > 0)
             {
-                _rentalDal.Add(rental);
-                return new SuccessResult(Messages.rentalAdded);
+                foreach (var rentalreturnDate in rentalsReturnDate)
+                {
+                    if (rentalreturnDate.ReturnDate == default)
+                    {
+                        carVarMi = true;
+                    }
+                }
+
+                foreach (var hasCustomerRentedCar in hasCustomersRentedCar)
+                {
+                    if (hasCustomerRentedCar.ReturnDate == default)
+                    {
+                       customerVarMi = true;
+                    }
+                }
+
+                if (carVarMi && customerVarMi == false)
+                {
+                    return new ErrorResult(Messages.rentalCancelled + " for car");
+                }
+
+                else if(customerVarMi && carVarMi == false)
+                {
+                    return new ErrorResult(Messages.rentalCancelled + " for customer");
+                }
+
+                else if(customerVarMi && carVarMi)
+                {
+                    return new ErrorResult(Messages.rentalCancelled + " for customer and car");
+                }
             }
-            return new ErrorResult(Messages.rentalRentDateInvalid);
+            _rentalDal.Add(rental);
+            return new SuccessResult(Messages.rentalAdded);
         }
 
         public IResult Delete(Rental rental)

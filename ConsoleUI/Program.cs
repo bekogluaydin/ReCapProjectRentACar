@@ -109,12 +109,8 @@ namespace ConsoleUI
 
         private static void addingRental(RentalManager rentalManager)
         {
-            var result = rentalManager.Add(new Rental { CarId = 5, CustomerId = 4, RentDate = new DateTime(2021, 02, 19), ReturnDate = new DateTime(2021, 02, 20) });
-            if (result.Success)
-            {
-                Console.WriteLine(result.Message);
-            }
-            else { Console.WriteLine(result.Message); }
+            var result = rentalManager.Add(new Rental { CarId =1006, CustomerId = 5, RentDate = new DateTime(2020, 02, 19), ReturnDate = new DateTime(2020, 02, 20) });
+            Console.WriteLine(result.Message);           
         }
 
         private static void addingCustomer(CustomerManager customerManager)

@@ -31,6 +31,7 @@ namespace Business.Constans
         public static string customerListed = "Customer Listed";
 
         public static string rentalAdded = "Rental Added";
+        public static string rentalCancelled = "Rental Cancelled";
         public static string rentalRentDateInvalid = "Rental Rent Date invalid";
         public static string rentalReturnDateInvalid = "Rental Return Date invalid";
         public static string rentalListed = "Rental Listed";
