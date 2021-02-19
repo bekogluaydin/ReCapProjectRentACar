@@ -36,9 +36,38 @@ namespace ConsoleUI
             //getAllUser(userManager);
 
             //addingCustomer(customerManager);
+            //getAllCustomerDetails(customerManager);
 
             //addingRental(rentalManager);
+            //getAllRental(rentalManager);
 
+
+
+        }
+
+        private static void getAllCustomerDetails(CustomerManager customerManager)
+        {
+            var result = customerManager.GetCustomerDetails();
+
+            if (result.Success)
+            {
+                Console.WriteLine("\n\n---- Detaylı Customer Bilgileri----\n");
+                foreach (var customerDetails in result.Data)
+                {
+                    Console.WriteLine("\n\n-----------------------------\n");
+
+                    Console.WriteLine("ıd: " + customerDetails.Id + "\nUser Id: " + customerDetails.UserId +
+                                       "\nUser First Name: " + customerDetails.FirstName + "\nUser Last Name: " + customerDetails.LastName +
+                                       "\nCompany Name: " + customerDetails.CompanyName + "\nUser Email : " + customerDetails.Email +
+                                       "\nUser Password: " + customerDetails.Password);
+                }
+                Console.WriteLine("\n\n\n" + result.Message);
+            }
+            else { Console.WriteLine(result.Message); }
+        }
+
+        private static void getAllRental(RentalManager rentalManager)
+        {
             var result = rentalManager.GetAll();
 
             if (result.Success)
@@ -68,7 +97,7 @@ namespace ConsoleUI
 
         private static void addingCustomer(CustomerManager customerManager)
         {
-            var result1 = customerManager.Add(new Customer { UserId = 1, CompanyName = "Redux Rent Car" });
+            var result1 = customerManager.Add(new Customer { UserId = 3, CompanyName = "Albayrak Rent" });
 
             if (result1.Success)
             {
@@ -79,7 +108,7 @@ namespace ConsoleUI
 
         private static void addingUser(UserManager userManager)
         {
-           var result1 = userManager.Add(new User { FirstName = "Aydın", LastName = "Bekoğlu" });
+           var result1 = userManager.Add(new User { FirstName = "Metecan", LastName = "Öğün" });
             if (result1.Success)
             {
                 Console.WriteLine(result1.Message);
