@@ -40,9 +40,31 @@ namespace ConsoleUI
 
             //addingRental(rentalManager);
             //getAllRental(rentalManager);
+            //getAllRentalDetails(rentalManager);
 
+        }
 
+        private static void getAllRentalDetails(RentalManager rentalManager)
+        {
+            var result = rentalManager.GetAllRentalDetails();
 
+            if (result.Success)
+            {
+                Console.WriteLine("\n\n---- Detaylı Customer Bilgileri----\n");
+                foreach (var rentalDetail in result.Data)
+                {
+                    Console.WriteLine("\n\n-----------------------------\n");
+
+                    Console.WriteLine("ıd: " + rentalDetail.Id + "\nUser Id: " + rentalDetail.UserId +
+                                       "\nCustomer First Name: " + rentalDetail.CustomerFirstName + "\nCustomer Last Name: " + rentalDetail.CustomerLastName +
+                                       "\nCompany Name: " + rentalDetail.CompanyName + "\nCustomer Email : " + rentalDetail.Email +
+                                       "\nCar Description: " + rentalDetail.CarDescription + "\nBrand Name: " + rentalDetail.BrandName
+                                       + "\nModel Year: " + rentalDetail.ModelYear + "\nDaily Price: " + rentalDetail.DailyPrice
+                                       + "\nRentDate: " + rentalDetail.RentDate + "\nReturn date: " + rentalDetail.ReturnDate);
+                }
+                Console.WriteLine("\n\n\n" + result.Message);
+            }
+            else { Console.WriteLine(result.Message); }
         }
 
         private static void getAllCustomerDetails(CustomerManager customerManager)
@@ -87,7 +109,7 @@ namespace ConsoleUI
 
         private static void addingRental(RentalManager rentalManager)
         {
-            var result = rentalManager.Add(new Rental { CarId = 1, CustomerId = 1, RentDate = new DateTime(2021, 02, 18) });
+            var result = rentalManager.Add(new Rental { CarId = 5, CustomerId = 4, RentDate = new DateTime(2021, 02, 19), ReturnDate = new DateTime(2021, 02, 20) });
             if (result.Success)
             {
                 Console.WriteLine(result.Message);
